@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Culture Networking Night - Startup × VC × Global</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #581c87 0%, #000000 50%, #831843 100%);
+            color: white;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: black;
+        }
+
+        .lang-btn:not(.active) {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .lang-btn:not(.active):hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(90deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #c084fc, #ec4899, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 3vw, 1.25rem);
+            color: #d1d5db;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .highlight-badge {
+            display: inline-flex;
+            padding: 12px 24px;
+            background: linear-gradient(90deg, rgba(234, 179, 8, 0.2), rgba(249, 115, 22, 0.2));
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 30px;
+            margin-bottom: 30px;
+            font-weight: 700;
+            color: #fde047;
+        }
+
+        .date-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 40px;
+            background: linear-gradient(90deg, #9333ea, #db2777);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 20px 60px rgba(147, 51, 234, 0.5);
+            transition: transform 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 20px;
+        }
+
+        .section-dark {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-align: center;
+            margin-bottom: 60px;
+            font-weight: 800;
+        }
+
+        /* Why Special */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        /* Experience Program */
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .program-card {
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(109, 40, 217, 0.5), rgba(190, 24, 93, 0.5));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* Registration Form */
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #9333ea;
+            box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.3);
+        }
+
+        select option {
+            background: #1f2937;
+            color: white;
+        }
+
+        .interests-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .interest-btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .interest-btn.active {
+            background: #9333ea;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(90deg, #9333ea, #db2777);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.5), rgba(22, 163, 74, 0.5));
+            border: 1px solid rgba(34, 197, 94, 0.5);
+            border-radius: 20px;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        /* Partners */
+        .partners-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .partner-badge {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: #9ca3af;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px 20px;
+            }
+
+            .form-container {
+                padding: 30px 20px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLanguage('ko')">한국어</button>
+        <button class="lang-btn" onclick="setLanguage('en')">English</button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">
+                <span>✨</span>
+                <span id="hero-badge">K-바이오 솔루션 페어 2025 공식 연계</span>
+            </div>
+            
+            <h1>
+                <span id="hero-title">Startup × VC × Global</span><br>
+                <span class="gradient-text" id="hero-subtitle">K-Culture Networking Night</span>
+            </h1>
+            
+            <p id="hero-description">외국인 투자자와 한국 스타트업이 만나는 프라이빗 비즈니스 밋업</p>
+            
+            <div class="highlight-badge">
+                <span id="hero-highlight">송도 × K-컬처 × 글로벌 네트워킹</span>
+            </div>
+            
+            <div class="date-info">
+                <span>📅</span>
+                <span id="hero-date">2025년 11월 20일 (목) 19:00-23:00</span>
+            </div>
+            
+            <a href="#register" class="cta-btn">
+                <span id="hero-cta">밋업 사전 신청</span>
+                <span>→</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Why Special Section -->
+    <section class="section-dark">
+        <div class="container">
+            <h2 id="why-title">왜 이 밋업인가?</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <p id="why-1">스타트업 창업자 × VC × 해외 바이어 매칭</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📍</div>
+                    <p id="why-2">송도컨벤시아 도보 10분 (차량 불필요)</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <p id="why-3">K-컬처로 아이스브레이킹, 비즈니스 네트워킹</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <p id="why-4">20개국+ 글로벌 투자자 & 스타트업</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Program -->
+    <section>
+        <div class="container">
+            <h2 id="program-title">밋업 프로그램 (4시간)</h2>
+            <div class="program-grid">
+                <div class="program-card" id="program-1">🤝 19:00-20:00 | Structured Speed Networking (1:1 매칭)</div>
+                <div class="program-card" id="program-2">🎵 20:00-21:30 | K-Culture DJ Night + Casual Networking</div>
+                <div class="program-card" id="program-3">💼 21:30-22:30 | VC Pitch Corner (5분 피칭 세션)</div>
+                <div class="program-card" id="program-4">🍸 22:30-23:00 | After Party + Contact Exchange</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Form -->
+    <section id="register" class="section-dark">
+        <div class="container">
+            <h2 id="form-title">밋업 사전 신청 (스타트업/VC 우선, 선착순 60명)</h2>
+            
+            <div class="form-container" id="form-container">
+                <div class="form-group">
+                    <label id="label-name">이름 *</label>
+                    <input type="text" id="input-name" required>
+                </div>
+
+                <div class="form-group">
+                    <label id="label-email">이메일 *</label>
+                    <input type="email" id="input-email" required>
+                </div>
+
+                <div class="form-group">
+                    <label id="label-country">국가 *</label>
+                    <input type="text" id="input-country" required>
+                </div>
+
+                <div class="form-group">
+                    <label id="label-type">참가자 유형 *</label>
+                    <select id="input-type" required>
+                        <option value="">Select...</option>
+                        <option value="founder" id="type-founder">스타트업 창업자</option>
+                        <option value="vc" id="type-vc">VC/투자자</option>
+                        <option value="buyer" id="type-buyer">해외 바이어</option>
+                        <option value="corporate" id="type-corporate">기업 담당자</option>
+                        <option value="other" id="type-other">기타</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label id="label-transport">교통 수단 *</label>
+                    <select id="input-transport" required>
+                        <option value="">Select...</option>
+                        <option value="public" id="transport-public">대중교통</option>
+                        <option value="hotel" id="transport-hotel">호텔 셔틀</option>
+                        <option value="walk" id="transport-walk">도보</option>
+                        <option value="other" id="transport-other">기타</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
